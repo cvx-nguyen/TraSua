@@ -1,0 +1,56 @@
+﻿@page "/"
+@using TraSua.Shared
+@inject IMenuService MenuService
+@inject IOrderService orderService
+
+<PageTitle>Index</PageTitle>
+
+<br>
+    <br>
+    <PizzaList Title="Lựa chọn về trà sửa"
+        Items="@State.Menu.products"
+        ButtonTitle="Thêm"
+        ButtonClass="btn btn-success pl-4 pr-4"
+        Selected="@AddToBasket"/>
+        <br>
+<!-- End menu-->
+
+<!-- Shopping Basket -->
+    <ShoppingBasket Orders="@State.Basket.Orders"
+    GetPizzaFromId="@State.Menu.GetProduct"
+    Selected="@RemoveFromBasket"/>
+
+<br>
+<CustomerEntry Title="Vui lòng nhập thông tin chi tiết của bạn"
+@bind-Customer="@State.Basket.Customer"
+ButtonTitle="Hoàn tất thủ tục"
+ButtonClass="mx-auto w-25 btn btn-success"
+ValidSubmit="PlaceOrder"/>
+<!-- End customer entry -->
+@State.ToJson()
+@code{
+    private State State { get; } = new State();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Menu menu = await MenuService.GetMenu();
+        foreach(Product product in menu.products)
+        {
+            State.Menu.Add(product);
+        }
+    }
+    private string PearlImage(Pearl pearl)
+    => $"images/{pearl.ToString().ToLower()}.png";
+
+    private void AddToBasket(Product product)
+    => State.Basket.Add(product.Id);
+
+    private void RemoveFromBasket(int pos)
+    => State.Basket.RemoveAt(pos);
+
+    private async Task PlaceOrder()
+    {
+        await orderService.PlaceOrder (State.Basket);
+    }
+}
+

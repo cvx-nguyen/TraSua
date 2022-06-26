@@ -1,0 +1,22 @@
+﻿<div class="row">
+    <div class="col">
+        @product.Name
+    </div>
+    <div class="col text-right">
+        @($"{product.Price:0.00}")
+    </div>
+    <div class="col">
+        <img src ="@PearlImage(product.Pearl)"
+        alt="@product.Pearl" />
+    </div>
+    <div class="col">
+        <button class="@ButtonClass"
+        @onclick="@(() => Selected.InvokeAsync(product))">        
+        @ButtonTitle
+        </button>
+    </div>
+</div>
+
+@code {
+
+}
