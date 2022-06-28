@@ -11,8 +11,8 @@ namespace TraSua.Shared
         public Customer Customer { get; set; } = new Customer();
         public List<int> Orders { get; set; } = new List<int>();
         public bool HasPaid { get; set; }
-        public void Add(int pizzaId)
-            => Orders.Add(pizzaId);
+        public void Add(int productId)
+            => Orders.Add(productId);
         public void RemoveAt(int pos)
             => Orders.RemoveAt(pos);
 

@@ -11,7 +11,7 @@ namespace TraSua.Shared
         public ValueTask<Menu> GetMenu() => new ValueTask<Menu>(
             new Menu
             {
-                products = new List<Product>
+                Products = new List<Product>
                 {
                    new Product(1, "\nNhiều trân châu", 12.00M, Pearl.nhieu),
                    new Product(2, "\nÍt trân châu", 10.00M, Pearl.it),

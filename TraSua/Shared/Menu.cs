@@ -8,11 +8,11 @@ namespace TraSua.Shared
 {
     public class Menu
     {
-        public List<Product> products { get; set; }
+        public List<Product> Products { get; set; }
         = new List<Product>();
-        public void Add(Product pizza)
-            => products.Add(pizza);
+        public void Add(Product product)
+            => Products.Add(product);
         public Product? GetProduct(int id)
-            => products.SingleOrDefault(pizza => pizza.Id == id);
+            => Products.SingleOrDefault(product => product.Id == id);
     }
 }

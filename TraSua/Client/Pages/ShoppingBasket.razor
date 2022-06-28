@@ -1,15 +1,13 @@
 ﻿<br><br>
 
-
-
 @if (Product.Any())
 {
     <ItemList Items="@Product">
         <Header>
-            <h1 class="">Sự lựa chọn của bạn</h1>
+            <h3 class="">Sự lựa chọn của bạn</h3>
         </Header>
         <RowTemplate Context="tuple">
-            <PizzaItem Pizza="@tuple.product"
+            <ProductItem product="@tuple.product"
                 ButtonClass="btn btn-danger"
                 ButtonTitle="Xóa"
                 Selected="@(() =>

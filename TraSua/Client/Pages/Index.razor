@@ -3,38 +3,72 @@
 @inject IMenuService MenuService
 @inject IOrderService orderService
 
-<PageTitle>Index</PageTitle>
+<PageTitle>MenuTraSua</PageTitle>
+
+@*foreach(var Product in State.Menu.Product)
+{
+   <div class="row">
+        <div class="col">
+            @Product.
+        </div>
+        <div class="col text-right">
+            @($"{Product.Price:0.00}")
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <img src="@PearlImage(Product.Pearl)"
+            alt="@Product.Pearl" />
+        </div>
+        <div class="col">
+            <button class="btn btn-success pl-4 pr-4" 
+            @onclick="@(()=> AddToBasket(Product))">
+                Thêm
+            </button>
+        </div>
+    </div>
+}*@
+
+@inject IToastService toastservice
+
+
 
 <br>
     <br>
-    <PizzaList Title="Lựa chọn về trà sửa"
-        Items="@State.Menu.products"
+    <ProductList Title="Lựa chọn về trà sửa"
+        Items="@State.Menu.Products"
         ButtonTitle="Thêm"
-        ButtonClass="btn btn-success pl-4 pr-4"
-        Selected="@AddToBasket"/>
-        <br>
-<!-- End menu-->
+        ButtonClass="btn btn-success pl-4 pr-4"     
+        Selected="@AddToBasket"
 
-<!-- Shopping Basket -->
+        />
+        <br>
+
+           
+
     <ShoppingBasket Orders="@State.Basket.Orders"
-    GetPizzaFromId="@State.Menu.GetProduct"
+    GetProductFromId="@State.Menu.GetProduct"
     Selected="@RemoveFromBasket"/>
 
 <br>
+<hr />
+
 <CustomerEntry Title="Vui lòng nhập thông tin chi tiết của bạn"
 @bind-Customer="@State.Basket.Customer"
 ButtonTitle="Hoàn tất thủ tục"
 ButtonClass="mx-auto w-25 btn btn-success"
 ValidSubmit="PlaceOrder"/>
-<!-- End customer entry -->
+
 @State.ToJson()
+
+
+
 @code{
     private State State { get; } = new State();
 
     protected override async Task OnInitializedAsync()
     {
         Menu menu = await MenuService.GetMenu();
-        foreach(Product product in menu.products)
+        foreach(Product product in menu.Products)
         {
             State.Menu.Add(product);
         }
@@ -45,6 +79,12 @@ ValidSubmit="PlaceOrder"/>
     private void AddToBasket(Product product)
     => State.Basket.Add(product.Id);
 
+
+    private void show(Product product)
+    {
+        this.toastservice.ShowInfo("1");
+    }
+
     private void RemoveFromBasket(int pos)
     => State.Basket.RemoveAt(pos);
 
@@ -52,5 +92,12 @@ ValidSubmit="PlaceOrder"/>
     {
         await orderService.PlaceOrder (State.Basket);
     }
+
+    //   protected override void OnInitialized()
+    //{
+    //    State.Menu.Add(new Product(1, "\nNhiều trân châu", 12.00M, Pearl.nhieu));
+    //    State.Menu.Add(new Product(2, "\nÍt trân châu", 10.00M, Pearl.it));
+    //    State.Menu.Add(new Product(3, "\nKhông trân châu", 9.99M, Pearl.None));
+    //}
 }
 

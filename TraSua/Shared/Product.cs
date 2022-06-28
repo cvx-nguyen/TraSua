@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace TraSua.Shared
 {
@@ -19,7 +20,8 @@ namespace TraSua.Shared
         public string Name { get; }
         public decimal Price { get; }
 
-        public Pearl Pearl
-        { get; }
+        public Pearl Pearl { get; }
+        [JsonIgnore]
+        public ICollection<Order> Orders { get; set; }
     }
 }

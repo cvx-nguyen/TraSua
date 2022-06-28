@@ -2,17 +2,23 @@
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+@page "/toast/types"
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Notifications
+@using Syncfusion.Blazor.Buttons
+@inject IToastService toastservice
 
-<p role="status">Current count: @currentCount</p>
+<button class="btn btn-info" @onclick="@(()=> toastservice.ShowInfo("info"))">Info</button>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@*<SfButton @OnClick="ShowOnclick">Show</SfButton>
+<SfToast Title="abc" Content="@ToastContent" @ref="Toast"></SfToast>
+*@
 
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
+@code{
+    //SfToast Toast;
+    //public string ToastContent { get; set; } = "1 2 3";
+    //private void ShowOnclick()
+    //{
+    //    this.Toast.Show();
+    //}
 }
